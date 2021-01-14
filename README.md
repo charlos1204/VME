@@ -29,6 +29,7 @@ VME is a highly interactive tool for visual analysis of microbial communities. V
 
 ## Installation
 **Install shiny and the R packages to run VME**
+
 clone folder https://github.com/charlos1204/VME.git and run script installapps.R 
 ```bash
 git clone https://github.com/charlos1204/VME.git
@@ -42,6 +43,7 @@ source("installapps.R")
 ```
 
 **Run VME app**
+
 Edit app.R and change line 25 to VME path folder.
 Change to VME folder and run R.
 
@@ -52,6 +54,7 @@ shiny::runApp('app')
 In RStudio open the app.R file and click in Run app button.
 
 **Run with Docker (recommended)**
+
 Pull the Docker image:
 ```bash
 docker pull charlos1204/vme:latest
