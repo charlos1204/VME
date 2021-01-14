@@ -45,6 +45,7 @@ source("installapps.R")
 **Run VME app**
 
 Edit app.R and change line 25 to VME path folder.
+
 Change to VME folder and run R.
 
 ```r
