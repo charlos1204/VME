@@ -25,3 +25,5 @@ VME is a highly interactive tool for visual analysis of microbial communities. V
      * bazanella_mth12.tsv
      * Metafile_Month12.txt
      * Rooted_tree_Month12.nwk
+
+## Installation
