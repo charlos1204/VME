@@ -5,16 +5,16 @@ VME is a highly interactive tool for visual analysis of microbial communities. V
 ## Requirements:
  * R >= 4.0.3
  * RStudio >= 1.3 (optional)
- * installapps.R (all R packages used in VME)
+ * installapps.R (R packages used in VME)
 
 ## Folders:
  * app
-  * app.R shiny code
-  * processingfunctions.R functions code
+   * app.R shiny code
+   * processingfunctions.R functions code
 
  * datasets
-  * Bazanella
-   * bazanella_mth12.tsv
-   * Metafile_Month12.txt
-   * Rooted_tree_Month12.nwk
+   * Bazanella
+     * bazanella_mth12.tsv
+     * Metafile_Month12.txt
+     * Rooted_tree_Month12.nwk
    
