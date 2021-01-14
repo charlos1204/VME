@@ -27,3 +27,21 @@ VME is a highly interactive tool for visual analysis of microbial communities. V
      * Rooted_tree_Month12.nwk
 
 ## Installation
+**Install shiny and the R packages to run VME
+
+clone folder https://github.com/charlos1204/VME.git and run script installapps.R 
+
+```r
+source("installapps.R")
+```
+
+**Run VME app
+Edit app.R and change line 25 to VME path folder.
+Change to VME folder and run R.
+
+```r
+library(shiny)
+shiny::runApp('app')
+```
+In RStudio open the app.R file and click in Run app button.
+
