@@ -20,6 +20,9 @@ library(stringr)
 
 library(MASS)
 
+cat("To exit press ctrl + C\n")
+cat("Copy and paste the link into a browser:\n")
+
 # Source helpers ----
 #source("/home/carlos/Documents/pulications/drafts/2020/Community_Explorer/SuppMat/Docker/app/processingfunctions.R")
 source("/root/app/processingfunctions.R") # change to the correct path
@@ -34,7 +37,7 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Example Data", tabName = "example_data", icon = icon("vials"),
              menuItem(radioButtons("microbiomedatasets", "",
-              choices = c(Endesfelder="Endesfelder",Wegner="Wegner",Bazanella="Bazanella"), selected = c("None selected" = "")))),
+              choices = c(Endesfelder="Endesfelder", Wegner="Wegner", Bazanella="Bazanella"), selected = c("None selected" = "")))),
     menuItem("Import Data", tabName = "import_data", icon = icon("arrow-circle-up"),
       menuItem(fileInput("otutable", "OTU table", multiple = FALSE,
         accept = c("text/tsv", "text/tab-separated-values,text/plain", ".tsv"))),
@@ -102,38 +105,7 @@ server <- function(input, output, session) {
   # the main observeEvent 
   observeEvent(input$processall, {
     example_data$exmicro <- "No example"
-    if(length(input$otutable$datapath) != 0 & length(input$metadatainfo$datapath) != 0 & length(input$treefile$datapath) != 0){
-      all <- get.alldata(input$otutable$datapath, input$level, input$metadatainfo$datapath, input$treefile$datapath, example_data$exmicro)
-    } else {
-      if(input$microbiomedatasets == "Endesfelder"){
-        example_data$exmicro <- "Endesfelder"
-        exdatapth <- "/root/datasets/Endesfelder/otu_data.tsv"
-        exmetadatapth <- "/root/datasets/Endesfelder/metadata.txt"
-        extreepth <- "/root/datasets/Endesfelder/97_otus.tree"
-        #exdatapth <- "../datasets/Endesfelder/otu_data.tsv"
-        #exmetadatapth <- "../datasets/Endesfelder/metadata.txt"
-        #extreepth <- "../datasets/Endesfelder/97_otus.tree"
-        all <- get.alldata(exdatapth, input$level, exmetadatapth, extreepth, example_data$exmicro)
-      } else  if(input$microbiomedatasets == "Wegner"){
-        example_data$exmicro <- "Wegner"
-        exdatapth <- "/root/datasets/Wegner/data_set.tsv"
-        exmetadatapth <- "/root/datasets/Wegner/metadata.txt"
-        #exdatapth <- "../datasets/Wegner/data_set.tsv"
-        #exmetadatapth <- "../datasets/Wegner/metadata.txt"
-        extreepth <- input$treefile$datapath
-        all <- get.alldata(exdatapth, input$level, exmetadatapth, extreepth, example_data$exmicro)
-      } else  if(input$microbiomedatasets == "Bazanella"){
-        example_data$exmicro <- "Bazanella"
-        exdatapth <- "/root/datasets/Bazanella/bazanella_mth12.tsv"
-        exmetadatapth <- "/root/datasets/Bazanella/Metafile_Month12.txt"
-        extreepth <- "/root/datasets/Bazanella/Rooted_tree_Month12.nwk"
-        #exdatapth <- "../datasets/Bazanella/bazanella_mth12.tsv"
-        #exmetadatapth <- "../datasets/Bazanella/Metafile_Month12.txt"
-        #extreepth <- "../datasets/Bazanella/Rooted_tree_Month12.nwk"
-        all <- get.alldata(exdatapth, input$level, exmetadatapth, extreepth, example_data$exmicro)
-      }
-    }
-
+    all <- get.alldata(input$otutable$datapath, input$level, input$metadatainfo$datapath, input$treefile$datapath, example_data$exmicro)
     alldata$total.ab.matrix <- all@total.ab.matrix
     alldata$relabumtx <- all@relabumtx
     alldata$otuDfRaw <- all@otuDfRaw
@@ -297,6 +269,84 @@ server <- function(input, output, session) {
     alldata$pie_mtx <- get.pie.matrix(alldata$taxonomy, rownames(bacteria_filtered), input$level, input$taxonomiccomposition, "Taxonomic composition")
   })
 
+  ##########################
+  #     Demo datasets      #
+  ##########################
+  observeEvent(input$microbiomedatasets, {
+    example_data$exmicro <- "No example"
+    if(input$microbiomedatasets == "Endesfelder"){
+      example_data$exmicro <- "Endesfelder"
+      exdatapth <- "/root/datasets/Endesfelder/otu_data.tsv"
+      exmetadatapth <- "/root/datasets/Endesfelder/metadata.txt"
+      extreepth <- "/root/datasets/Endesfelder/97_otus.tree"
+      #exdatapth <- "datasets/Endesfelder/otu_data.tsv"
+      #exmetadatapth <- "datasets/Endesfelder/metadata.txt"
+      #extreepth <- "datasets/Endesfelder/97_otus.tree"
+      all <- get.alldata(exdatapth, input$level, exmetadatapth, extreepth, example_data$exmicro)
+    } else  if(input$microbiomedatasets == "Wegner"){
+      example_data$exmicro <- "Wegner"
+      exdatapth <- "/root/datasets/Wegner/data_set.tsv"
+      exmetadatapth <- "/root/datasets/Wegner/metadata.txt"
+      #exdatapth <- "datasets/Wegner/data_set.tsv"
+      #exmetadatapth <- "datasets/Wegner/metadata.txt"
+      extreepth <- input$treefile$datapath
+      all <- get.alldata(exdatapth, input$level, exmetadatapth, extreepth, example_data$exmicro)
+    } else  if(input$microbiomedatasets == "Bazanella"){
+      example_data$exmicro <- "Bazanella"
+      exdatapth <- "/root/datasets/Bazanella/bazanella_mth12.tsv"
+      exmetadatapth <- "/root/datasets/Bazanella/Metafile_Month12.txt"
+      extreepth <- "/root/datasets/Bazanella/Rooted_tree_Month12.nwk"
+      #exdatapth <- "datasets/Bazanella/bazanella_mth12.tsv"
+      #exmetadatapth <- "datasets/Bazanella/Metafile_Month12.txt"
+      #extreepth <- "datasets/Bazanella/Rooted_tree_Month12.nwk"
+      all <- get.alldata(exdatapth, input$level, exmetadatapth, extreepth, example_data$exmicro)
+    }
+    alldata$total.ab.matrix <- all@total.ab.matrix
+    alldata$relabumtx <- all@relabumtx
+    alldata$otuDfRaw <- all@otuDfRaw
+    alldata$taxonomy <- all@taxonomy
+    alldata$otulist.mtx <- all@otulist.mtx
+    alldata$tracking <- all@tracking
+    alldata$metadata <- all@metadata
+    alldata$theTree <- all@theTree
+    alldata$pam_commdw <- all@pam_commdw
+    alldata$num_clustdw <- all@num_clustdw
+    alldata$dw <- all@dw
+    alldata$pie_mtx <- all@pie_mtx
+    
+    # Estimation of the network graph
+    alldata$adjmtx <- get.adjMtx(alldata$relabumtx, as.numeric(input$errthrshld), as.numeric(input$pvalsccrepe), as.numeric(input$scoreccrepe), example_data$exmicro)
+    nds$nodes <- data.frame(id = 1:ncol(alldata$adjmtx), label = colnames(alldata$adjmtx))
+    
+    # PCoA and stacked bar plot
+    dw_pcoa <- pcoa(all@dw)
+    tmp_pcoa <- get.pcoa(alldata$pam_commdw, alldata$num_clustdw, alldata$tracking, example_data$exmicro, dw_pcoa, alldata$relabumtx, dir.axis2 = -1)
+    data_pts$datapts <- as.data.frame(tmp_pcoa[1])
+    data_pts$ldngs <-tmp_pcoa[2]
+    # to be implemented
+    # xy <- metaMDS(all@dw,k=2,trymax=100)
+    # data_pts$datapts[,'Axis.1'] <- xy$points[,1]
+    # data_pts$datapts[,'Axis.2'] <- xy$points[,2]
+    
+    if(example_data$exmicro == "Bazanella"){
+      metalbl <- unique(alldata$metadata[, 'Group'])
+      for(lbl in metalbl){
+        subjects <- names(alldata$metadata[which(alldata$metadata == lbl),])
+        data_pts$datapts[subjects,"cluster"] <- lbl
+      }
+      
+      data_pts$top_bac <- get.stackedbarplot.metadata(alldata$relabumtx, data_pts$datapts, data_pts$thetop)
+      alldata$clstr_clr <- ggplotColours(length(metalbl))
+    } else {
+      data_pts$top_bac <- get.stackedbarplot(alldata$relabumtx, alldata$pam_commdw, alldata$num_clustdw, data_pts$thetop)
+      alldata$clstr_clr <- ggplotColours(alldata$num_clustdw)
+    }
+    
+    # copy objects
+    copydata$relabumtx.copy <- makeCopyMtx(alldata$relabumtx)
+    copydata$total.ab.matrix.copy <- makeCopyMtx(alldata$total.ab.matrix)
+  })
+  
   #obsereEvent for network community
   observeEvent(input$loadcomm, {
     communities$comm <- load.communities(input$loadcomm$datapath, alldata$adjmtx)

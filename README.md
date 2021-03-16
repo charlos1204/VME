@@ -54,7 +54,8 @@ shiny::runApp('app')
 ```
 In RStudio open the app.R file and click in Run app button.
 
-**Run with Docker (recommended)**
+## Run with Docker (recommended)
+Follow the instructions [here](docker.md) to install Docker in your local machine.<br>
 
 Pull the Docker image:
 ```bash
@@ -66,3 +67,11 @@ Run Docker image:
 docker run -p 3838:3838 charlos1204/vme
 ```
 Copy link http://0.0.0.0:3838 into a browser
+
+## Versioning
+0.1
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+

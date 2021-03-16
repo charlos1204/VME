@@ -1,10 +1,10 @@
 FROM rocker/shiny:4.0.3
 
 LABEL maintainer="Carlos Armando Garcia Perez <carlos.garcia@helmholtz-muenchen.de>"
-LABEL version="1.0"
+LABEL version="0.1"
 LABEL description="Shiny app of the Community Explorer"
 
-# Install git, wget, python-dev, pip, BLAS + LAPACK and other dependencies
+# Install dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
   nano \
